@@ -1,22 +1,34 @@
-"use client";
-import { useEffect, useState } from "react";
+import Link from "next/link";
 
-export default function Partice() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [movie, setMovies] = useState();
+export const metadata = {
+  title: "Home",
+};
 
-  const getMovies = async () => {
-    const res = await fetch(
-      "https://nomad-movies.nomadcoders.workers.dev/movies"
-    );
-    const movieData = await res.json();
-    console.log(movieData);
-    setMovies(movieData);
-    setIsLoading(false);
-  };
-  useEffect(() => {
-    getMovies();
-  }, []);
+export const API_URL = "https://nomad-movies.nomadcoders.workers.dev/movies";
 
-  return <h1>{isLoading ? "loading😂" : JSON.stringify(movie)}</h1>;
+const getMovieData = async () => {
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
+  console.log("백엔드에서 발생");
+  const res = await fetch(API_URL, {
+    next: {
+      revalidate: 60,
+    },
+  });
+  const movieData = await res.json();
+  return movieData;
+};
+
+export default async function Partice() {
+  const data = await getMovieData();
+  console.log(data);
+  return (
+    <div>
+      {data.map((movie) => (
+        <li key={movie.id}>
+          <Link href={`/movies/${movie.id}`}>{movie.title}</Link>
+        </li>
+      ))}{" "}
+    </div>
+  );
 }

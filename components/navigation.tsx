@@ -6,7 +6,7 @@ export default function Navigation() {
   const path = usePathname();
 
   return (
-    <div>
+    <div className="bg-red-400">
       네비게이션임
       <ul>
         <li>

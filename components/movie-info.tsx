@@ -13,7 +13,7 @@ async function getMovie(id: string) {
 //UI만 갖기
 export default async function MovieInfo({ id }: { id: string }) {
   const movie = await getMovie(id);
-  return <h6>{JSON.stringify(movie)}</h6>;
+  return <h6 className="bg-red-100">{JSON.stringify(movie)}</h6>;
 }
 
 //server component

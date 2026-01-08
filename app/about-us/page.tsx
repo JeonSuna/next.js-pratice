@@ -5,7 +5,7 @@ export const metadata = {
 };
 export default function AboutUs() {
   return (
-    <div>
+    <div className="bg-amber-600">
       <h1>About us</h1>
     </div>
   );
